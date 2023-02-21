@@ -14,21 +14,21 @@
         <div class="stat-bar">
           <div class="stat-progress" :style="{ width: fatigue + '%' }"></div>
         </div>
-        <div class="stat-value">{{ fatigue }}</div>
+        <div class="stat-value">{{ parseInt(fatigue) }}</div>
       </div>
       <div class="stat">
         <div class="stat-name">Faim:</div>
         <div class="stat-bar">
           <div class="stat-progress" :style="{ width: faim + '%' }"></div>
         </div>
-        <div class="stat-value">{{ faim }}</div>
+        <div class="stat-value">{{ parseInt(faim) }}</div>
       </div>
       <div class="stat">
         <div class="stat-name">Plaisir:</div>
         <div class="stat-bar">
           <div class="stat-progress" :style="{ width: plaisir + '%' }"></div>
         </div>
-        <div class="stat-value">{{ plaisir }}</div>
+        <div class="stat-value">{{ parseInt(plaisir) }}</div>
       </div>
     </div>
 
@@ -45,11 +45,11 @@
 export default {
   data() {
     return {
-      fatigue: 10,
+      fatigue: 100,
       faim: 100,
       plaisir: 100,
       maxStat: 100,
-      animalFace: "(^▿^)"
+      animalFace: ""
     };
   },
   methods: {
@@ -76,6 +76,13 @@ export default {
       } else {
         this.animalFace = "(^▿^)";
       }
+    },
+    decreaseStats() {
+      setInterval(() => {
+        this.faim -= 0.208333333; // 100/8h
+        this.fatigue -= 0.069444444; // 100/24h
+        this.plaisir -= 0.166666667; // 100/10h
+      }, 1000);
     }
   },
   watch: {
@@ -88,9 +95,16 @@ export default {
     plaisir() {
       this.updateAnimalFace();
     }
+  },
+  mounted() {
+    this.updateAnimalFace();
+    this.decreaseStats();
   }
 };
 </script>
+
+
+
 
 
 
@@ -124,15 +138,15 @@ export default {
 }
 
 .face-arms {
-  color: var(--color-light-blue);
+  color: var(--color-arms);
 }
 
 .face-eyes {
-  color: var(--color-dark-gray);
+  color: var(--color-eye);
 }
 
 .face-nose {
-  color: var(--color-light-blue);
+  color: var(--color-nose);
 }
 
 .status {
